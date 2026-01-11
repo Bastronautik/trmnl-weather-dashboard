@@ -1,0 +1,106 @@
+<div class="layout layout--col gap p--4 rounded {{ color_mode }}
+  {% if color_mode == 'light' %}
+  text--black bg--white
+  {% else %}
+  text--white bg--black
+  {% endif %}
+  ">
+
+  <div class="flex flex--col flex--center-y gap w--full h--full border--h-2 pb--3">
+
+    <div class="flex gap--xsmall">
+
+      <div class="flex flex--col flex--right">
+        <!-- Large number -->
+        <div class="temp-display flex gap--xsmall">
+
+          {% assign temp_str = current_temp | append: "" %}
+          {% assign temp_chars = temp_str | split: "" %}
+          {% for char in temp_chars %}
+          <div class="temp-digit" data-char="{{ char }}"></div>
+          {% endfor %}
+          <div class="temp-digit" data-char="°"></div>
+        </div>
+      </div>
+
+      <div class="flex flex--col flex--left gap--xsmall">
+
+        <div class="flex gap--xsmall flex--center-x ml--1">
+          <div class="flex gap--small">
+            <div class="small-temp-digit" data-char="↑"></div>
+            {% assign high_str = today_max | append: "" %}
+            {% assign high_chars = high_str | split: "" %}
+            {% for char in high_chars %}
+            <div class="small-temp-digit" data-char="{{ char }}"></div>
+            {% endfor %}
+            <div class="small-temp-digit" data-char="°"></div>
+          </div>
+        </div>
+
+        <div class="flex gap--xsmall flex--center-x ml--1">
+          <div class="flex gap--small">
+            <div class="small-temp-digit" data-char="↓"></div>
+            {% assign low_str = today_min | append: "" %}
+            {% assign low_chars = low_str | split: "" %}
+            {% for char in low_chars %}
+            <div class="small-temp-digit" data-char="{{ char }}"></div>
+            {% endfor %}
+            <div class="small-temp-digit" data-char="°"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="value--small grid grid--cols-8 text--center gap--medium">
+      {% assign code = current.weather_code %}
+      {% assign code_str = code | append: "" %}
+
+      <!-- Sunny -->
+      <i class="wi wi-day-sunny {% if code == 0 or code == 1 %}icon-on{% else %}icon-off{% endif %}"></i>
+      <!-- Cloudy -->
+      <i class="wi wi-cloud {% if code == 2 or code == 3 %}icon-on{% else %}icon-off{% endif %}"></i>
+      <!-- Rain -->
+      {% assign rain_codes = "51,53,55,56,57,61,63,65,66,67,80,81,82" | split: "," %}
+      <i class="wi wi-rain {% if rain_codes contains code_str %}icon-on{% else %}icon-off{% endif %}"></i>
+      <!-- Snow -->
+      {% assign snow_codes = "71,73,75,85,86" | split: "," %}
+      <i class="wi wi-snow {% if snow_codes contains code_str %}icon-on{% else %}icon-off{% endif %}"></i>
+      <!-- Windy/Foggy -->
+      <i class="wi wi-windy {% if code == 45 or code == 48 %}icon-on{% else %}icon-off{% endif %}"></i>
+      <!-- Snowflake -->
+      <i class="wi wi-snowflake-cold {% if code == 77 %}icon-on{% else %}icon-off{% endif %}"></i>
+      <!-- Strong Wind -->
+      <i class="wi wi-strong-wind {% if code == 95 %}icon-on{% else %}icon-off{% endif %}"></i>
+      <!-- Lightning -->
+      <i class="wi wi-lightning {% if code == 96 or code == 99 %}icon-on{% else %}icon-off{% endif %}"></i>
+    </div>
+  </div>
+
+  <div class="w--full flex flex--row gap--large">
+
+    <div class="location-name stretch value--xsmall flex flex--col flex--left gap--none">
+      {{ location }}
+      <span class="label--small">{{ latitude }}, {{ longitude }}</span>
+    </div>
+
+    <div class="label--small">
+      LAST UPDATE<br>
+      <span>{{ current_time }}</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.temp-digit').forEach(el => {
+    const char = el.getAttribute('data-char');
+    el.innerHTML = renderDigit(char, 50);
+  });
+
+  document.querySelectorAll('.small-temp-digit').forEach(el => {
+    const char = el.getAttribute('data-char');
+    el.innerHTML = renderDigit(char, 22);
+  });
+</script>

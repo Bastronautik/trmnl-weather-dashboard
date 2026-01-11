@@ -1,0 +1,46 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: "  https://api.open-meteo.com/v1/forecast?latitude={{ trmnl.plugin_settings.custom_fields_values.latitude }}&longitude={{ trmnl.plugin_settings.custom_fields_values.longitude }}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&temperature_unit={{ trmnl.plugin_settings.custom_fields_values.temperature_unit }}&timezone=auto&forecast_days=4"
+polling_headers: ''
+polling_body: ''
+id: 191027
+custom_fields:
+- name: About this plugin
+  keyname: author_bio
+  field_type: author_bio
+  description: Yet another weather dashboard! Get a weather dashboard with a 3-day forecast, visualized by dot-matrix style numbers and some useful icons. Powered by Open-Meteo API. <br><br> Update 1 - Updated the 3 and 8 to something better, thanks Maximillian!
+  email_address: trmnl@achtnegen.nl
+- keyname: location
+  name: Location
+  field_type: string
+  default: ''
+- keyname: latitude
+  name: Latitude
+  field_type: string
+  default: ''
+  help_text: Use <a href="https://www.gps-coordinates.net/" target="_blank">GPS Coordinates website</a> to find your Latitude
+- keyname: longitude
+  name: Longitude
+  field_type: string
+  default: ''
+  help_text: Use <a href="https://www.gps-coordinates.net/" target="_blank">GPS Coordinates website</a> to find your Longitude
+- keyname: temperature_unit
+  name: Temperature Unit
+  field_type: select
+  default: celsius
+  options:
+  - Celsius (°C): celsius
+  - Fahrenheit (°F): fahrenheit
+- keyname: color_mode
+  name: Color Mode
+  field_type: select
+  default: dark
+  options:
+  - Dark: dark
+  - Light: light
+name: Weather Dashboard
+refresh_interval: 60
