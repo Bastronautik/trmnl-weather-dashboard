@@ -2,8 +2,6 @@
 
 A beautiful weather dashboard plugin for TRMNL that displays current conditions and a 3-day forecast with dot-matrix style numbers and weather icons.
 
-![Weather Dashboard Preview](https://img.shields.io/badge/TRMNL-Plugin-blue)
-
 ## Features
 
 - **Current Weather Display**: Large dot-matrix style temperature display with current conditions
